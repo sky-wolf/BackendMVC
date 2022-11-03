@@ -1,0 +1,66 @@
+﻿@model Guessing
+
+<h3 class="my-5">
+    Guessing Game
+</h3>
+@if (Context.Request.Cookies["higscore"] != null)
+{
+    <h5>High score: @Context.Request.Cookies["higscore"]</h5>
+}
+@if (ViewBag.Generated != null)
+{
+    <p>@ViewBag.Generated</p>
+}
+@if (ViewBag.Count != null)
+{
+    <p>Guesses: @ViewBag.Count</p>
+}
+
+    <h3 class="my-5">
+        Guess a number betwin 1 and 100.
+    </h3>
+   
+    @if (ViewBag.Vinn != null)
+    {
+        <div class="col-6">
+            <p>@ViewBag.Vinn
+            @if (ViewBag.Sethighscore != null)
+            {
+                @ViewBag.Sethighscore
+            }
+        </p>
+                    
+            <div class="row g-2">
+                <div class="col-4"></div>
+                <div class="col-4">
+                <a asp-controller="Guessing" asp-action="Index" class="btn btn-success">New Game</a>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+    }else
+    {
+        <form asp-action="Guess" method="post" role="form">
+            <div class="col-6">
+            @if (ViewBag.Message != null)
+                {
+                    <div class="row g-2">
+                        <div class="text-center d-grid">
+                            <p>@ViewBag.Message</p>
+                        </div>
+                    </div>
+                }
+                <div class="row g-2">
+                    <div class="col-12">
+                        <label asp-for="Number" class="form-label"></label>
+                        <input asp-for="Number" class="form-control" type="number" min="1" max="100" />
+                    <input type="hidden" value="@ViewBag.Count" name="count" />
+                    </div>
+                </div>
+                <div class="col-md-offset-2 col-md-5">
+                    <input type="submit" class="btn btn-secondary" value="Test" />
+                </div>
+            </div>
+
+        </form>
+    }
