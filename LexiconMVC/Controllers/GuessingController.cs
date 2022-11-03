@@ -16,9 +16,17 @@ namespace LexiconMVC.Controllers
 
         public IActionResult Guess()
         {
+
+            var tal = HttpContext.Session.GetInt32("SessionKeyGuess");
             var generates = _guessingRepository.Generat();
-            HttpContext.Session.SetInt32("SessionKeyGuess", generates);
-            ViewBag.Generated = "A new Number has been generated so start the guessing game";
+
+            if(tal == null)
+            {
+                HttpContext.Session.SetInt32("SessionKeyGuess", generates);
+                ViewBag.Generated = "A new Number has been generated so start the guessing game";
+            }
+
+
             return View();
         }
 
@@ -38,7 +46,11 @@ namespace LexiconMVC.Controllers
                 if(vinn)
                 {
                     ViewBag.Vinn = "Winer winer chicken diner";
-                    HttpContext.Session.Clear();
+                    
+                    var generates = _guessingRepository.Generat();
+                    HttpContext.Session.SetInt32("SessionKeyGuess", generates);
+                    ViewBag.Generated = "A new Number has been generated so start the guessing game";
+
                     var highscore = HttpContext.Request.Cookies["higscore"];
                     if (highscore == null)
                     {

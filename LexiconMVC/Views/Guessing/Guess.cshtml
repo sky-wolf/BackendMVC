@@ -3,6 +3,7 @@
 <h3 class="my-5">
     Guessing Game
 </h3>
+
 @if (Context.Request.Cookies["higscore"] != null)
 {
     <h5>High score: @Context.Request.Cookies["higscore"]</h5>
@@ -24,22 +25,13 @@
     {
         <div class="col-6">
             <p>@ViewBag.Vinn
-            @if (ViewBag.Sethighscore != null)
-            {
-                @ViewBag.Sethighscore
-            }
-        </p>
-                    
-            <div class="row g-2">
-                <div class="col-4"></div>
-                <div class="col-4">
-                <a asp-controller="Guessing" asp-action="Index" class="btn btn-success">New Game</a>
-                </div>
-                <div class="col-4"></div>
-            </div>
+                @if (ViewBag.Sethighscore != null)
+                {
+                    @ViewBag.Sethighscore
+                }
+            </p>
         </div>
-    }else
-    {
+    }
         <form asp-action="Guess" method="post" role="form">
             <div class="col-6">
             @if (ViewBag.Message != null)
@@ -63,4 +55,4 @@
             </div>
 
         </form>
-    }
+    
