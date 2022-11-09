@@ -60,7 +60,7 @@ namespace LexiconMVC.Controllers
                     {
                         var high = Convert.ToInt32(highscore);
 
-                        if (high < count)
+                        if (high > count)
                         {
                             HttpContext.Response.Cookies.Append("higscore", Convert.ToString(count), options);
                             ViewBag.Sethighscore = "New High score";
