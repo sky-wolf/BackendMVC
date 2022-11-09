@@ -24,7 +24,7 @@
         <input type="submit" value="Filter" />
     </p>
 </form>
-<table>
+@*<table>
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -42,6 +42,24 @@
             <td><a asp-action="Delete" asp-route-id="@person.Id">Delete</a></td>
         </tr>
     }
-</table>
+</table>*@
 
-    
+
+<div class="row">
+    <div class="col-4">
+        <h6><strong>ID</strong></h6>
+    </div>
+    <div class="col-3">
+        <h6><strong>Name</strong></h6>
+    </div>
+    <div class="col-3">
+        <h6><strong>City</strong></h6>
+    </div>
+    <div class="col-1">
+    </div>
+</div>
+<hr />
+@foreach (var person in Model.tempListe)
+{
+    <partial name="_personPartial" model="person" />
+}
