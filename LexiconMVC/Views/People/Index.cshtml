@@ -1,0 +1,47 @@
+﻿@model PeopleViewModel
+
+<form asp-controller="People" asp-action="Create" method="post" role="form">
+    
+   <div class="row g-2">
+       <div class="col-6">
+            <label asp-for="CreatePresonViewModel.Name" class="form-label"></label>
+            <input asp-for="CreatePresonViewModel.Name" />
+       </div>
+        <div class="col-6">
+            <label asp-for="CreatePresonViewModel.City" class="form-label"></label>
+            <input asp-for="CreatePresonViewModel.City" />
+        </div>
+   </div>
+   <div class="col-md-offset-2 col-md-5">
+       <input type="submit" class="btn btn-secondary" value="Add" />
+   </div>
+   <hr />
+
+</form>
+<form asp-controller="People" asp-action="Index" >
+    <p>
+        Title: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+        <th></th>
+    </tr>
+  
+
+    @foreach (var person in Model.tempListe)
+    {
+        <tr>
+            <td>@person.Id</td>
+            <td>@person.Name</td>
+            <td>@person.City</td>
+            <td><a asp-action="Delete" asp-route-id="@person.Id">Delete</a></td>
+        </tr>
+    }
+</table>
+
+    
