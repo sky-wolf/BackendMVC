@@ -13,5 +13,9 @@ namespace LexiconMVC.ViewModels
         [MaxLength(200)]
         public string City { get; set; }
 
+        [Required]
+        [MaxLength(20)]
+        public string PhoneNumber { get; set; } = string.Empty;
+
     }
 }
