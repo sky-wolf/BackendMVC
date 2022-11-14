@@ -1,5 +1,6 @@
 using LexiconMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,10 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(15);
 });
 builder.Services.AddScoped<IGuessingRepository, GuessingRepository>();
-
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 var app = builder.Build();
 
 app.UseSession();
@@ -20,6 +24,7 @@ app.UseRouting();
 if(app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    DbInitializer.Seed(app);
 }
 app.MapControllerRoute(
     name: "GuessingGame",
@@ -35,6 +40,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 
 app.Run();
