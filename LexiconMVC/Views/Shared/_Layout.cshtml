@@ -18,24 +18,41 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    MVC Basic
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="About">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="Contact">Contact</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="Prodjects">Prodjects</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Feber" asp-action="Check">Feber</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Guessing" asp-action="Guess">Guessing game</a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Prodjects">Prodjects</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Feber" asp-action="Check">Feber</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Guessing" asp-action="Guess">Guessing game</a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="People" asp-action="Index">People</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Ajax" asp-action="Index">Ajax</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Database" asp-action="Index">Database</a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
