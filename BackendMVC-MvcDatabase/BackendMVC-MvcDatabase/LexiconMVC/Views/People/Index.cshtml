@@ -1,0 +1,74 @@
+﻿@model PeopleViewModel
+@*PeopleController*@
+
+<form asp-controller="People" asp-action="Create" method="post" role="form">
+    <div class="row g-2">
+        <div class="col-4">
+            <label asp-for="CreatePresonViewModel.Name" class="form-label"></label>
+            <input asp-for="CreatePresonViewModel.Name" id="name" />
+        </div>
+        <div class="col-4">
+            <label asp-for="CreatePresonViewModel.PhoneNumber" class="form-label"></label>
+            <input asp-for="CreatePresonViewModel.PhoneNumber" id="phonenumber" />
+        </div>
+        <div class="col-4">
+            <label asp-for="CreatePresonViewModel.City" class="form-label"></label>
+            <input asp-for="CreatePresonViewModel.City" id="city" />
+        </div>
+    </div>
+    <div class="col-md-offset-2 col-md-5">
+        <input type="submit" class="btn btn-secondary" value="Add" />
+    </div>
+ </form>
+    <hr />
+
+
+ <form asp-controller="People" asp-action="Index" >
+    <p>
+    Search: <input type="text" id="searchstring" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+@*<div class="row">
+    <table>
+    <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>City</th>
+    <th></th>
+    </tr>
+
+    @foreach (var person in Model.tempListe)
+    {
+    <tr>
+    <td>@person.Id</td>
+    <td>@person.Name</td>
+    <td>@person.City</td>
+    <td><a asp-action="Delete" asp-route-id="@person.Id">Delete</a></td>
+    </tr>
+    }
+    </table>
+</div>*@
+
+<div class="row">
+    <div class="col-4">
+        <h6><strong>ID</strong></h6>
+    </div>
+    <div class="col-2">
+        <h6><strong>Name</strong></h6>
+    </div>
+    <div class="col-2">
+        <h6><strong>PhoneNumber</strong></h6>
+    </div>
+    <div class="col-2">
+        <h6><strong>City</strong></h6>
+    </div>
+    <div class="col-2">
+    </div>
+</div>
+<hr />
+@foreach (var person in Model.tempListe)
+{
+    <partial name="_personPartial" model="person" />
+}

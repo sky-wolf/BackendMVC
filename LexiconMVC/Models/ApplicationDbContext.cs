@@ -15,6 +15,6 @@ namespace LexiconMVC.Models
 
         }
 
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<PersonDB> Persons { get; set; }
     }
 }

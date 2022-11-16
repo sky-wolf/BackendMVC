@@ -21,7 +21,7 @@ namespace LexiconMVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("LexiconMVC.Models.Person", b =>
+            modelBuilder.Entity("LexiconMVC.Models.PersonDB", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
