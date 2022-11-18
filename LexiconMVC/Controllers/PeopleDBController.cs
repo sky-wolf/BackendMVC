@@ -30,7 +30,7 @@ namespace LexiconMVC.Controllers
             //ModelState.Remove("City");
             if (ModelState.IsValid)
             {
-                var city = _applicationDbContext.Citys.FirstOrDefault(c => c.Id == createPresonViewModel.City);
+                var city = _applicationDbContext.Citys.FirstOrDefault(c => c.Id == createPresonViewModel.City.Id);
 
                 city.Persons.Add(new PersonDB { Id = Guid.NewGuid().ToString(), Name = createPresonViewModel.Name, City = city, PhoneNumber = createPresonViewModel.PhoneNumber });
                //_applicationDbContext.Add(new PersonDB { Id = Guid.NewGuid().ToString(), Name = createPresonViewModel.Name, City = createPresonViewModel.City, PhoneNumber = createPresonViewModel.PhoneNumber });

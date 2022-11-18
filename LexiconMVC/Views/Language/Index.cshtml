@@ -1,0 +1,24 @@
+﻿@model List<Language>
+
+
+<h1>List of Language</h1>
+<div><a asp-action="Create" class="btn btn-primary">Add a new language</a></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var language in Model)
+            {
+            <tr>
+                <th>@language.Name</th>
+                <td>
+                    <a asp-action="Delete" asp-route-id=@language.Id class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

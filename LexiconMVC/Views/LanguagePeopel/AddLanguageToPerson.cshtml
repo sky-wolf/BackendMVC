@@ -1,0 +1,15 @@
+﻿@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+
+<h1>Add language to @ViewBag.Name</h1>
+
+<form asp-action="AddLanguageToPerson" method="post">
+    <div class="form-group">
+        <label>Language: </label>
+        <select name="language" class="form-control" asp-items="@ViewBag.Langs"></select>
+        <input name="id" type="hidden" value="@ViewBag.Person" />
+    </div>
+    <input type="submit" value="Add language" class="btn btn-primary" />
+</form>

@@ -27,6 +27,15 @@
                      );
             }
 
+            if (!context.Languages.Any())
+            {
+                context.AddRange
+                    (
+                        new Language {  Name = "English" },
+                        new Language {  Name = "Svenska" }
+                     );
+            }
+
             context.SaveChanges();
         }
 

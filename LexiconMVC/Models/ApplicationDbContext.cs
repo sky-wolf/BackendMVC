@@ -22,6 +22,8 @@ namespace LexiconMVC.Models
 
         public DbSet<City> Citys { get; set; }
 
+        public DbSet<Language> Languages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,6 +35,10 @@ namespace LexiconMVC.Models
             modelBuilder.Entity<City>()
                 .HasMany(c => c.Persons)
                 .WithOne(p => p.City);
+
+            modelBuilder.Entity<PersonDB>()
+                .HasMany(p => p.Language)
+                .WithMany(c => c.Person);
         }
     }
 }

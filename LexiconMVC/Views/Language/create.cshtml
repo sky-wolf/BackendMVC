@@ -1,0 +1,10 @@
+﻿@model Language
+
+
+<h1>New language</h1>
+
+<form asp-action="Create" method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <input type="submit" value="Create" />
+</form>
