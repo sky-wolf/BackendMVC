@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LexiconMVC.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace LexiconMVC.ViewModels
 {
@@ -9,8 +10,7 @@ namespace LexiconMVC.ViewModels
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(200)]
-        public string City { get; set; }
+        public City City { get; set; }
 
         [Required]
         [MaxLength(20)]

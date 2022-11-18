@@ -3,6 +3,7 @@ using LexiconMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LexiconMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221117130150_person and city and forenkey")]
+    partial class personandcityandforenkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +42,7 @@ namespace LexiconMVC.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Citys", (string)null);
+                    b.ToTable("Citys");
                 });
 
             modelBuilder.Entity("LexiconMVC.Models.Country", b =>
@@ -57,7 +59,7 @@ namespace LexiconMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("LexiconMVC.Models.PersonDB", b =>
@@ -79,7 +81,7 @@ namespace LexiconMVC.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("LexiconMVC.Models.City", b =>

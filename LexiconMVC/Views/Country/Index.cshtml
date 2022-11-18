@@ -1,0 +1,25 @@
+﻿@model List<Country>
+
+
+    <h1>List of Countrys</h1>
+    <div><a asp-action="Create" class="btn btn-primary">Add a new country</a></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var country in Model)
+            {
+            <tr>
+                <th>@country.Name</th>
+                <td>
+                    <a asp-controller="City" asp-action="Index" class="btn btn-primary" asp-route-id=@country.Id>Citys</a>
+                    <a asp-action="Delete" asp-route-id=@country.Id class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

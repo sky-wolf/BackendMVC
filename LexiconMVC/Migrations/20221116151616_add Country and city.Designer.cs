@@ -3,6 +3,7 @@ using LexiconMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LexiconMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116151616_add Country and city")]
+    partial class addCountryandcity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,18 +31,13 @@ namespace LexiconMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Citys", (string)null);
+                    b.ToTable("Citys");
                 });
 
             modelBuilder.Entity("LexiconMVC.Models.Country", b =>
@@ -57,7 +54,7 @@ namespace LexiconMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("LexiconMVC.Models.PersonDB", b =>
@@ -65,8 +62,9 @@ namespace LexiconMVC.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -77,41 +75,7 @@ namespace LexiconMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Persons", (string)null);
-                });
-
-            modelBuilder.Entity("LexiconMVC.Models.City", b =>
-                {
-                    b.HasOne("LexiconMVC.Models.Country", "Country")
-                        .WithMany("Citys")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("LexiconMVC.Models.PersonDB", b =>
-                {
-                    b.HasOne("LexiconMVC.Models.City", "City")
-                        .WithMany("Persons")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
-            modelBuilder.Entity("LexiconMVC.Models.City", b =>
-                {
-                    b.Navigation("Persons");
-                });
-
-            modelBuilder.Entity("LexiconMVC.Models.Country", b =>
-                {
-                    b.Navigation("Citys");
+                    b.ToTable("Persons");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿@model CreatePresonViewModel
+﻿@model CreatePresonDBViewModel
 @*PeopleDBController*@
 
 <div class="row g-2">
@@ -11,12 +11,18 @@
         <input asp-for="PhoneNumber" id="phonenumber" />
     </div>
     <div class="col-4">
-        <label asp-for="City" class="form-label"></label>
-        <input asp-for="City" id="city" />
+        <label  asp-for="City" class="form-label">City</label>
+        @*<select name="id" class="form-select" id="Lang" asp-items="@ViewBag.City"></select>*@
+        <select id="city">
+            @foreach (var item in ViewBag.Test as IList<City>)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
     </div>
 </div>
 <div class="col-md-offset-2 col-md-5">
-    <button class="btn btn-info" onclick="Insert()" type="submit">Add</button>@*"*@
+    <button class="btn btn-info" onclick="Insert()" type="submit">Add</button>
 </div>
 <hr />
 
@@ -63,9 +69,12 @@
 <div id="partial"></div>
 
 
-<script>
+<script type="text/javascript">
+    var City_ID;
     const URL = "https://localhost:7274/PeopleDB";
-
+    $('#city').change(function () {
+        City_ID = $('#city').val();
+    });
     function Get() {
         $.ajax({
             type: "Post",
@@ -138,14 +147,15 @@
 
 
     function Insert() {
-
+        
+        console.log(City_ID);
         $.ajax({
             url: '@Url.Action("Create","PeopleDB")',
             type: "Post",
             data: {
                 'Name': $("#name").val(),
                 'PhoneNumber': $("#phonenumber").val(),
-                'City': $("#city").val()
+                'City': City_ID
             },
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (response) {
