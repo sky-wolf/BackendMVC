@@ -1,4 +1,6 @@
-﻿namespace LexiconMVC.Models
+﻿using LexiconMVC.Data;
+
+namespace LexiconMVC.Models
 {
     public class DbInitializer
     {
@@ -11,19 +13,19 @@
             {
                 context.Countries.AddRange(Countries.Select(c => c.Value));
             }
-            if(!context.Citys.Any())
+            if(!context.Cities.Any())
             {
                 
-                context.Citys.AddRange(Citys.Select(c => c.Value));
+                context.Cities.AddRange(Citys.Select(c => c.Value));
             }
-            if (!context.Persons.Any())
+            if (!context.People.Any())
             {
                 context.AddRange
                     (
                         new PersonDB { Id = Guid.NewGuid().ToString(), Name = "Rykel Bennet", City = Citys["Salt lake"], PhoneNumber = "+1 498 12 34 56" },
                         new PersonDB { Id = Guid.NewGuid().ToString(), Name = "Rykel Bennet", City = Citys["London"], PhoneNumber = "+44 159 12 34 56" },
                         new PersonDB { Id = Guid.NewGuid().ToString(), Name = "Peter Hollans", City = Citys["New York"], PhoneNumber = "+1 987 12 34 56" },
-                        new PersonDB { Id = Guid.NewGuid().ToString(), Name = "Tim Corey", City = Citys["Los Agels"], PhoneNumber = "+1 753 12 34 56" }
+                        new PersonDB { Id = Guid.NewGuid().ToString(), Name = "Tim Corey", City = Citys["Los Angeles"], PhoneNumber = "+1 753 12 34 56" }
                      );
             }
 

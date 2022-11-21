@@ -1,3 +1,4 @@
+using LexiconMVC.Data;
 using LexiconMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

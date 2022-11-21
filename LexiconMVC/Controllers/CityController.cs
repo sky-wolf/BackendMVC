@@ -1,4 +1,5 @@
-﻿using LexiconMVC.Models;
+﻿using LexiconMVC.Data;
+using LexiconMVC.Models;
 using LexiconMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,7 +21,7 @@ namespace LexiconMVC.Controllers
         public IActionResult Index(int id)
         {
             var country = _applicationDbContext.Countries.FirstOrDefault(c => c.Id == id);
-            var city = _applicationDbContext.Citys.Where(x => x.Country.Id == id).ToList();
+            var city = _applicationDbContext.Cities.Where(x => x.Country.Id == id).ToList();
             ViewBag.Name = country.Name;
             ViewBag.CountryId = country.Id;
             return View(city);
@@ -44,7 +45,7 @@ namespace LexiconMVC.Controllers
             {
                 var countries = _applicationDbContext.Countries.FirstOrDefault(x => x.Id == id);
                 //_applicationDbContext.Add(new City { Name = cityViewModel.Name, Country = countries });
-                countries.Citys.Add(new City { Name = cityViewModel.Name, Country = countries });
+                countries.Cities.Add(new City { Name = cityViewModel.Name, Country = countries });
                 _applicationDbContext.SaveChanges();
             }
 
@@ -53,10 +54,10 @@ namespace LexiconMVC.Controllers
 
         public IActionResult RemoveCity(int cityid, string id)
         {
-            var city = _applicationDbContext.Citys.FirstOrDefault(x => x.Id == cityid);
+            var city = _applicationDbContext.Cities.FirstOrDefault(x => x.Id == cityid);
             
 
-            _applicationDbContext.Citys.Remove(city);
+            _applicationDbContext.Cities.Remove(city);
             _applicationDbContext.SaveChanges();
             return RedirectToAction("Index", new { id = id });
 

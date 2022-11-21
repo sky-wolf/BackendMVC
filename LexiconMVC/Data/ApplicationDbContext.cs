@@ -1,26 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LexiconMVC.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Reflection.Emit;
 
-namespace LexiconMVC.Models
+namespace LexiconMVC.Data
 {
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext()
         {
-                
+
         }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            :base(options)
+            : base(options)
         {
 
         }
 
-        public DbSet<PersonDB> Persons { get; set; }
+        public DbSet<PersonDB> People { get; set; }
 
         public DbSet<Country> Countries { get; set; }
 
-        public DbSet<City> Citys { get; set; }
+        public DbSet<City> Cities { get; set; }
 
         public DbSet<Language> Languages { get; set; }
 
@@ -29,16 +31,16 @@ namespace LexiconMVC.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Country>()
-                .HasMany(c => c.Citys)
+                .HasMany(c => c.Cities)
                 .WithOne(p => p.Country);
 
             modelBuilder.Entity<City>()
-                .HasMany(c => c.Persons)
+                .HasMany(c => c.People)
                 .WithOne(p => p.City);
 
             modelBuilder.Entity<PersonDB>()
-                .HasMany(p => p.Language)
-                .WithMany(c => c.Person);
+                .HasMany(p => p.Languages)
+                .WithMany(c => c.People);
         }
     }
 }

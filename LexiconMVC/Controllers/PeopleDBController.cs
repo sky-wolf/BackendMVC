@@ -1,4 +1,5 @@
-﻿using LexiconMVC.Models;
+﻿using LexiconMVC.Data;
+using LexiconMVC.Models;
 using LexiconMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,88 +18,88 @@ namespace LexiconMVC.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Test = _applicationDbContext.Citys.ToList();
-            ViewBag.City = new SelectList(_applicationDbContext.Citys, "Id", "Name");
+            ViewBag.Test = _applicationDbContext.Cities.ToList();
+            ViewBag.City = new SelectList(_applicationDbContext.Cities, "Id", "Name");
             return View();
 
         }
 
 
         [HttpPost]
-        public IActionResult Create(CreatePresonDBViewModel createPresonViewModel)
+        public IActionResult Create(CreatePresonDBViewModel createPresonViewModel, int id)
         {
-            //ModelState.Remove("City");
+            ModelState.Remove("City");
             if (ModelState.IsValid)
             {
-                var city = _applicationDbContext.Citys.FirstOrDefault(c => c.Id == createPresonViewModel.City.Id);
+                var city = _applicationDbContext.Cities.FirstOrDefault(c => c.Id == id);
 
-                city.Persons.Add(new PersonDB { Id = Guid.NewGuid().ToString(), Name = createPresonViewModel.Name, City = city, PhoneNumber = createPresonViewModel.PhoneNumber });
-               //_applicationDbContext.Add(new PersonDB { Id = Guid.NewGuid().ToString(), Name = createPresonViewModel.Name, City = createPresonViewModel.City, PhoneNumber = createPresonViewModel.PhoneNumber });
+                //city.People.Add(new PersonDB { Id = Guid.NewGuid().ToString(), Name = createPresonViewModel.Name, City = city, PhoneNumber = createPresonViewModel.PhoneNumber });
+               _applicationDbContext.Add(new PersonDB { Id = Guid.NewGuid().ToString(), Name = createPresonViewModel.Name, City = city, PhoneNumber = createPresonViewModel.PhoneNumber });
                _applicationDbContext.SaveChanges();
             }
 
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        //[HttpPost]
-        //public ActionResult Delete(string id)
-        //{
-        //    PersonDB person = _applicationDbContext.Persons.FirstOrDefault(p => p.Id == id);
-        //    if (person != null)
-        //    {
-        //        _applicationDbContext.Persons.Remove(person);
-        //        _applicationDbContext.SaveChanges();
-        //    }
-        //    person = _applicationDbContext.Persons.FirstOrDefault(p => p.Id == id);
-        //    if (person == null)
-        //    {
-        //        return StatusCode(StatusCodes.Status204NoContent);
-        //    }
-        //    else
-        //    {
-        //        return StatusCode(StatusCodes.Status422UnprocessableEntity);
-        //    }
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            PersonDB person = _applicationDbContext.People.FirstOrDefault(p => p.Id == id);
+            if (person != null)
+            {
+                _applicationDbContext.People.Remove(person);
+                _applicationDbContext.SaveChanges();
+            }
+            person = _applicationDbContext.People.FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity);
+            }
 
-        //}
+        }
 
         public IActionResult GetPeople()
         {
         
-            List<PersonDB> person = _applicationDbContext.Persons.ToList();
+            List<PersonDB> person = _applicationDbContext.People.ToList();
 
             return PartialView("_peopleDBPartial", person);
         }
 
-        //public IActionResult GetDetails(string id)
-        //{
-        //    PersonDB person = _applicationDbContext.Persons.FirstOrDefault(p => p.Id == id);
-        //    return PartialView("_personDBPartial", person);
-        //}
+        public IActionResult GetDetails(string id)
+        {
+            PersonDB person = _applicationDbContext.People.FirstOrDefault(p => p.Id == id);
+            return PartialView("_personDBPartial", person);
+        }
 
-        //[HttpPost]
-        //public IActionResult Search(string searchString)
-        //{
+        [HttpPost]
+        public IActionResult Search(string searchString)
+        {
 
-        //    List<PersonDB> person;
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        person = (from p in _applicationDbContext.Persons.Where(p => p.Name.Contains(searchString)) select p).ToList();
+            List<PersonDB> person;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                person = (from p in _applicationDbContext.People.Where(p => p.Name.Contains(searchString)) select p).ToList();
 
-                
-        //        if (person.Count == 0)
-        //        {
-                    
-        //            person = (from p in _applicationDbContext.Persons.Where(p => p.City.Contains(searchString)) select p).ToList();
-        //        }
+              
+                if (person.Count == 0)
+                {
+                  
+                    person = (from p in _applicationDbContext.People.Where(p => p.City.Name.Contains(searchString)) select p).ToList();
+                }
 
 
-        //    }
-        //    else
-        //    {
-        //        person = _applicationDbContext.Persons.ToList();
-        //    }
+            }
+            else
+            {
+                person = _applicationDbContext.People.ToList();
+            }
 
-        //    return PartialView("_peopleDBPartial", person);
-        //}
+            return PartialView("_peopleDBPartial", person);
+        }
     }
 }

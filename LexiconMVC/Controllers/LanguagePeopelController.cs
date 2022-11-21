@@ -1,4 +1,4 @@
-﻿using LexiconMVC.Models;
+﻿using LexiconMVC.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,17 +17,17 @@ namespace LexiconMVC.Controllers
         public IActionResult Index(string id)
         {
 
-            var person = _applicationDbContext.Persons.Include(x => x.Language).FirstOrDefault(x => x.Id == id);
+            var person = _applicationDbContext.People.Include(x => x.Languages).FirstOrDefault(x => x.Id == id);
 
             ViewBag.Name = person.Name;
             ViewBag.PersonId = person.Id;
 
-            return View(person.Language);
+            return View(person.Languages);
         }
 
         public IActionResult AddLanguageToPerson(string id)
         {
-            var person = _applicationDbContext.Persons.FirstOrDefault(x => x.Id == id);
+            var person = _applicationDbContext.People.FirstOrDefault(x => x.Id == id);
 
             ViewBag.Person = person.Id;
             ViewBag.Name = person.Name;
@@ -39,12 +39,12 @@ namespace LexiconMVC.Controllers
         [HttpPost]
         public IActionResult AddLanguageToPerson(int language, string id)
         {
-            var person = _applicationDbContext.Persons.Include(x => x.Language).FirstOrDefault(x => x.Id == id);
+            var person = _applicationDbContext.People.Include(x => x.Languages).FirstOrDefault(x => x.Id == id);
             var lang = _applicationDbContext.Languages.FirstOrDefault(x => x.Id == language);
 
-            if (!person.Language.Any(c => c.Id == lang.Id))
+            if (!person.Languages.Any(c => c.Id == lang.Id))
             {
-                person.Language.Add(lang);
+                person.Languages.Add(lang);
                 _applicationDbContext.SaveChanges();
                 return RedirectToAction("Index", new { id = id });
             }
@@ -64,10 +64,10 @@ namespace LexiconMVC.Controllers
 
         public IActionResult RemoveFromPerson(int langid, string id)
         {
-            var person = _applicationDbContext.Persons.Include(x => x.Language).FirstOrDefault(x => x.Id == id);
+            var person = _applicationDbContext.People.Include(x => x.Languages).FirstOrDefault(x => x.Id == id);
             var lang = _applicationDbContext.Languages.FirstOrDefault(x => x.Id == langid);
 
-            person.Language.Remove(lang);
+            person.Languages.Remove(lang);
             _applicationDbContext.SaveChanges();
             return RedirectToAction("Index", new { id = id });
 

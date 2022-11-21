@@ -12,7 +12,6 @@
     </div>
     <div class="col-4">
         <label  asp-for="City" class="form-label">City</label>
-        @*<select name="id" class="form-select" id="Lang" asp-items="@ViewBag.City"></select>*@
         <select id="city">
             @foreach (var item in ViewBag.Test as IList<City>)
             {
@@ -75,6 +74,7 @@
     $('#city').change(function () {
         City_ID = $('#city').val();
     });
+
     function Get() {
         $.ajax({
             type: "Post",
@@ -147,11 +147,11 @@
 
 
     function Insert() {
-        
+        var id = City_ID;
         console.log(City_ID);
         $.ajax({
-            url: '@Url.Action("Create","PeopleDB")',
             type: "Post",
+            url: "PeopleDB/Create?id=" + id,/*'@Url.Action("Create","PeopleDB")',*/
             data: {
                 'Name': $("#name").val(),
                 'PhoneNumber': $("#phonenumber").val(),

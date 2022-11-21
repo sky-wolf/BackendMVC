@@ -1,4 +1,5 @@
-﻿using LexiconMVC.Models;
+﻿using LexiconMVC.Data;
+using LexiconMVC.Models;
 using LexiconMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,12 +42,12 @@ namespace LexiconMVC.Controllers
         public ActionResult Delete(int id)
         {
             var toBeRemoveCountry = _applicationDbContext.Countries.FirstOrDefault(p => p.Id == id);
-            var toBeRemoveCity = _applicationDbContext.Citys.Where(p => p.Id == toBeRemoveCountry.Id).ToList();
+            var toBeRemoveCity = _applicationDbContext.Cities.Where(p => p.Id == toBeRemoveCountry.Id).ToList();
             if (toBeRemoveCountry != null)
             {
                 if (toBeRemoveCity != null)
                 {
-                    _applicationDbContext.Citys.RemoveRange(toBeRemoveCity);
+                    _applicationDbContext.Cities.RemoveRange(toBeRemoveCity);
                 }
                 _applicationDbContext.Countries.Remove(toBeRemoveCountry);
                 _applicationDbContext.SaveChanges();

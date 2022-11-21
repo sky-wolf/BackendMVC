@@ -9,6 +9,6 @@ namespace LexiconMVC.Models
         public string Name { get; set; }
         public string? PhoneNumber { get; set; }
         public City City { get; set; }
-        public List<Language> Language { get; set; }
+        public List<Language> Languages { get; set; }
     }
 }
