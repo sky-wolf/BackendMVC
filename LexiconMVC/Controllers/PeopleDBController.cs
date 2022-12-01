@@ -65,7 +65,7 @@ namespace LexiconMVC.Controllers
         public IActionResult GetPeople()
         {
         
-            List<PersonDB> person = _applicationDbContext.People.ToList();
+            List<PersonDB> person = _applicationDbContext.People.Include(x => x.City).ToList();
 
             return PartialView("_peopleDBPartial", person);
         }

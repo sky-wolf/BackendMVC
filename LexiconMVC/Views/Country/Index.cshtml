@@ -16,6 +16,7 @@
             <tr>
                 <th>@country.Name</th>
                 <td>
+                    <a asp-action="Edit" asp-route-id=@country.Id class="btn btn-info">Edit</a>
                     <a asp-controller="City" asp-action="Index" class="btn btn-primary" asp-route-id=@country.Id>Citys</a>
                     <a asp-action="Delete" asp-route-id=@country.Id class="btn btn-danger">Delete</a>
                 </td>

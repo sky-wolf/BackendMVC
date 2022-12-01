@@ -1,0 +1,11 @@
+﻿@model IdentityRole
+
+
+<h1>Create role</h1>
+
+<form asp-action="Update" method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" value="@Model.Name"></input>
+    <input asp-for="Id" type="hidden" value="@Model.Id" />
+    <input type="submit" value="Edit" class="btn btn-success" />
+</form>

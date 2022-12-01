@@ -1,0 +1,251 @@
+﻿@model CreatePresonDBViewModel
+
+<div class="row">
+
+    <h1 class="text-center">Identity</h1>
+    
+</div>
+<hr>
+<div class="row">
+    <div class="row g-2">
+        <div class="col-4">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" id="name" />
+        </div>
+        <div class="col-4">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" id="phonenumber" />
+        </div>
+        <div class="col-4">
+            <label asp-for="City" class="form-label">City</label>
+            <select id="city">
+                @foreach (var item in ViewBag.Test as IList<City>)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-offset-2 col-md-5">
+        <button class="btn btn-info" onclick="Insert()" type="submit">Add</button>
+    </div>
+   
+</div>
+<hr />
+<div class="row">
+    <p>
+        Search: <input type="text" id="searchstring" name="SearchString" />
+        <button class="btn btn-info" onclick="Search()" type="submit">Filter</button>
+    </p>
+
+</div>
+<hr />
+<div class="row">
+
+    <div class="col">
+        <button class="btn btn-primary" onclick="Get();" type="submit">People</button>
+
+    </div>
+    <div class="col">
+        <label>ID:</label>
+        <input type="text" id="Id" />
+        <button class="btn btn-info" onclick="GetDetails()" type="submit">Details</button>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="btn btn-primary" onclick="GetEdit()" type="submit">Edit</button>
+            @if (User.IsInRole("Admin"))
+            {
+                <button class="btn btn-danger" onclick="Delete()" type="submit">Delete</button>
+            }
+        }
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <h6><strong>ID</strong></h6>
+    </div>
+    <div class="col-2">
+        <h6><strong>Name</strong></h6>
+    </div>
+    <div class="col-2">
+        <h6><strong>PhoneNumber</strong></h6>
+    </div>
+    <div class="col-2">
+        <h6><strong>City</strong></h6>
+    </div>
+    <div class="col-2">
+    </div>
+</div>
+<hr />
+<div id="massage"></div>
+<div id="partial"></div>
+
+<script type="text/javascript">
+    var City_ID;
+    const URL = "https://localhost:7274/Identity";
+    $('#city').change(function () {
+        City_ID = $('#city').val();
+    });
+    $('#cityedit').change(function () {
+
+        let valu = $('#cityedit').val();
+        document.getElementById("cityplats").value = valu;
+    });
+
+    function Get() {
+        $.ajax({
+            type: "Post",
+            url: URL + "/GetPeople",
+            contentType: 'application/json',
+            success: function (data) {
+                $("#partial").html(data);
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                console.log("In the complete function");
+            }
+        });
+
+    }
+
+    function GetEdit() {
+        let id = $("#Id").val();
+        $.ajax({
+            type: "Get",
+            url: "Identity/Edit?id=" + id,
+            success: function (response) {
+                $("#partial").html(response);
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                console.log("In the complete function");
+            }
+        });
+    }
+
+    function Edit() {
+        let id = CityID2;
+        console.log(id);
+        $.ajax({
+            type: "Post",
+            url: "Identity/Update?id=" + id,/*'@Url.Action("Create","PeopleDB")',*/
+            data: {
+                'Id': $("#idedit").val(),
+                'Name': $("#nameedit").val(),
+                'PhoneNumber': $("#phonenumberedit").val(),
+                'City': CityID2
+            },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (response) {
+                $("#massage").html("<p>Person Added</p>");
+
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                Get();
+            }
+        });
+
+    }
+
+    function GetDetails() {
+        let id = $("#Id").val();
+        $.ajax({
+            type: "Get",
+            url: "Identity/GetDetails?id=" + id,
+            success: function (response) {
+                $("#partial").html(response);
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                console.log("In the complete function");
+            }
+        });
+    }
+
+    function Delete() {
+        let id = $("#Id").val();
+        $.ajax({
+            type: "Post",
+            url: "Identity/Delete?id=" + id,
+            success: function (response) {
+                $("#massage").html("Person Deleted");
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                Get();
+            }
+        });
+    }
+
+    function Search() {
+        let search = $("#searchstring").val();
+
+        $.ajax({
+            type: "post",
+            url: "Identity/Search?searchString=" + search,
+            success: function (response) {
+                $("#partial").html(response);
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                console.log("In the complete function");
+            }
+        });
+    }
+
+
+    function Insert() {
+        var id = City_ID;
+        console.log(City_ID);
+        $.ajax({
+            type: "Post",
+            url: "Identity/Create?id=" + id,/*'@Url.Action("Create","PeopleDB")',*/
+            data: {
+                'Name': $("#name").val(),
+                'PhoneNumber': $("#phonenumber").val(),
+                'City': City_ID
+            },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (response) {
+                $("#massage").html("<p>Person Added</p>");
+
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                Get();
+            }
+        });
+
+    }
+
+    function handleAjaxError(error) {
+
+        switch (error.status) {
+            case 404:
+                console.log(error.responseText);
+                break;
+            case 500:
+                console.log(error.responseText);
+                break;
+            default:
+                console.log(error);
+                break;
+        }
+    }
+</script>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<IdentityRole>
+
+<h1>List of roles</h1>
+
+
+<a asp-action="Create" class="btn btn-primary">Create new role</a>
+<a asp-action="AddUserToRole" class="btn btn-primary">Add user to role</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <th>@item.Id</th>
+                <th>@item.Name</th>
+                <th>
+                    @if(item.Name != "User" && item.Name != "Admin")
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
+                    }
+                </th>
+            </tr>
+        </tbody>   
+    }
+</table>

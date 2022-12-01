@@ -1,10 +1,13 @@
 ﻿using LexiconMVC.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace LexiconMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LanguagePeopelController : Controller
     {
         private readonly ApplicationDbContext _applicationDbContext;
@@ -14,25 +17,25 @@ namespace LexiconMVC.Controllers
             _applicationDbContext = applicationDbContext;
         }
 
-        public IActionResult Index(string id)
+        public IActionResult Index(int id)
         {
 
-            var person = _applicationDbContext.People.Include(x => x.Languages).FirstOrDefault(x => x.Id == id);
+            var languages = _applicationDbContext.Languages.Include(x => x.People).FirstOrDefault(x => x.Id == id); 
 
-            ViewBag.Name = person.Name;
-            ViewBag.PersonId = person.Id;
+            ViewBag.Name = languages.Name;
+            ViewBag.PersonId = languages.Id;
 
-            return View(person.Languages);
+            return View(languages.People);
         }
 
-        public IActionResult AddLanguageToPerson(string id)
+        public IActionResult AddLanguageToPerson(int id)
         {
-            var person = _applicationDbContext.People.FirstOrDefault(x => x.Id == id);
+            var language = _applicationDbContext.Languages.FirstOrDefault(x => x.Id == id);
 
-            ViewBag.Person = person.Id;
-            ViewBag.Name = person.Name;
+            ViewBag.Language = language.Id;
+            ViewBag.Name = language.Name;
 
-            ViewBag.Langs = new SelectList(_applicationDbContext.Languages, "Id", "Name");
+            ViewBag.Peopel = new SelectList(_applicationDbContext.People, "Id", "Name");
             return View();
         }
 

@@ -1,0 +1,12 @@
+﻿@model City
+
+
+<h1>Edit city</h1>
+
+<form asp-action="Update" method="post" asp-route-countryid=@ViewBag.CountryId>
+    <label asp-for="Name"></label>
+    <input asp-for="Name" value="@Model.Name"/>
+    <input asp-for="Id" type="hidden" value="@Model.Id" />
+    
+    <input type="submit" value="Edit" />
+</form>

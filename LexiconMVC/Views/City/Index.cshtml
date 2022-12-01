@@ -1,9 +1,9 @@
 ﻿@model List<City>
-<div class="row">
 
     <a asp-action="Create" class="btn btn-primary" asp-route-id=@ViewBag.CountryId>Add City</a>
+    <a asp-controller="Country" asp-action="Index" class="btn btn-primary" >Back to @ViewBag.Name</a>
 
-</div>
+
 
 @if (Model.Count() != 0)
 {
@@ -23,8 +23,10 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
-
-                    <td> <a asp-controller="City" asp-action="RemoveCity" class="btn btn-danger" asp-route-id=@ViewBag.CountryId asp-route-cityid=@item.Id>Remove City</a> </td>
+                    <td> 
+                        <a asp-action="Edit" asp-route-id=@item.Id asp-route-countryid=@ViewBag.CountryId class="btn btn-success">Edit</a> 
+                        <a asp-controller="City" asp-action="RemoveCity" class="btn btn-danger" asp-route-id=@ViewBag.CountryId asp-route-cityid=@item.Id>Remove City</a> 
+                    </td>
                 </tr>
             }
         </tbody>

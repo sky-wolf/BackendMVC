@@ -1,0 +1,11 @@
+﻿@model Country
+
+
+<h1>New country</h1>
+
+<form asp-action="Update" method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" value="@Model.Name"/>
+    <input asp-for="Id" type="hidden" value="@Model.Id" />
+    <input type="submit" value="Edit" />
+</form>

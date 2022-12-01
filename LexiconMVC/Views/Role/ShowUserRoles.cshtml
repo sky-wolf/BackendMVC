@@ -1,0 +1,23 @@
+﻿@model UserRoleViewModel
+
+
+<h1>All roles for @Model.Name</h1>
+<a asp-controller="Role" asp-action="AddRoleToUser" asp-route-userid=@Model.UserId class="btn btn-primary">Add new role</a>
+
+<table class="tabel">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Roles)
+    {
+        <tbody>
+            <tr>
+                <th>@item</th>
+                <th><a asp-action="RemoveRoleFromUser" asp-route-rolename=@item asp-route-userid=@Model.UserId class="btn btn-danger">Delete</a></th>
+            </tr>
+        </tbody>
+    }
+</table>

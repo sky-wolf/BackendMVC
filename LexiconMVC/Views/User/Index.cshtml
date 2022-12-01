@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ApplicationUser>
+
+    <h1>All users</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <th>@item.Id</th>
+                    <th>@item.FirstName</th>
+                    <th>@item.LastName</th>
+                    <th>@item.Email</th>
+                    <th>
+                        <a asp-controller="Role" asp-action="ShowUserRoles" asp-route-id=@item.Id class="btn btn-primary">Show roles</a>
+                        <a asp-action="Delete" asp-route-id=@item.Id class="btn btn-danger">Delete</a>
+                    </th>
+                </tr>
+            </tbody>
+    }
+    </table>

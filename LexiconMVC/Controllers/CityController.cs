@@ -1,14 +1,17 @@
 ﻿using LexiconMVC.Data;
 using LexiconMVC.Models;
 using LexiconMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
 using System.Diagnostics.Metrics;
 
 namespace LexiconMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CityController : Controller
     {
         private readonly ApplicationDbContext _applicationDbContext;
@@ -51,7 +54,31 @@ namespace LexiconMVC.Controllers
 
             return RedirectToAction("Index", new { id = id });
         }
+         public IActionResult Edit(int id , int countryid)
+        {
+            ViewBag.CountryId = countryid;
+            var city = _applicationDbContext.Cities.Find(id);
+            return View(city);
+        }
 
+
+        [HttpPost]
+        public IActionResult Update(City city, int countryid)
+        {
+            ModelState.Remove("Country");
+            if (ModelState.IsValid)
+            {
+                var _city = _applicationDbContext.Cities.FirstOrDefault(x => x.Id == city.Id);
+                if (_city != null)
+                {
+                    _city.Name = city.Name;
+                }
+                _applicationDbContext.Update(_city);
+                _applicationDbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Index", new { id = countryid });
+        }
         public IActionResult RemoveCity(int cityid, string id)
         {
             var city = _applicationDbContext.Cities.FirstOrDefault(x => x.Id == cityid);

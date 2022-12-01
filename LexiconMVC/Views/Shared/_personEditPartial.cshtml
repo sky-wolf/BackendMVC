@@ -1,0 +1,64 @@
+﻿@model PersonDB
+<div class="row">
+    <div class="col-4">
+            <input hidden asp-for="Id" id="idedit" value="@Model.Id" />
+    </div>
+    <div class="col-2">
+            <input asp-for="Name" id="nameedit" value="@Model.Name" />
+    </div>
+    <div class="col-2">
+            <input asp-for="PhoneNumber" id="phonenumberedit" value="@Model.PhoneNumber" />
+    </div>
+    <div class="col-2">
+            <select id="cityedit">
+                
+                @foreach (var item in ViewBag.Test as IList<City>)
+                {
+                    @if (Model.City.Name == item.Name)
+                    {
+                        <option selected value="@item.Id">@item.Name</option>
+                    }else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
+
+            <input type="hidden" id="cityplats" value="@Model.City.Id">
+    </div>
+    <div class="col-2">
+        <button class="btn btn-info" onclick="Edit()" type="submit">Update</button>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#cityedit').change(function () {
+        let valu = $('#cityedit').val();
+        document.getElementById("cityplats").value = valu;
+    });
+    function Edit() {
+        let id = $('#cityedit').val();
+        console.log(id);
+        $.ajax({
+            type: "Post",
+            url: "Identity/Update",
+            data: {
+                'Id': $("#idedit").val(),
+                'Name': $("#nameedit").val(),
+                'PhoneNumber': $("#phonenumberedit").val(),
+                'City': id
+            },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (response) {
+                $("#massage").html("<p>Person Added</p>");
+
+            },
+            error: function (error) {
+                handleAjaxError(error);
+            },
+            complete: function () {
+                Get();
+            }
+        });
+
+    }
+</script>

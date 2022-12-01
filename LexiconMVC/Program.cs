@@ -2,6 +2,7 @@ using LexiconMVC.Data;
 using LexiconMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,11 +24,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         });
   
 });
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 var app = builder.Build();
 
 app.UseSession();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapRazorPages();
+
 
 if(app.Environment.IsDevelopment())
 {

@@ -1,0 +1,9 @@
+﻿<h1>Add role to @ViewBag.Name</h1>
+
+<form asp-controller="Role" asp-action="AddRoleToUser" method="post">
+    <div class="form-control">
+        <label>Role:</label>
+        <select name="rolename" class="form-control" asp-items="ViewBag.Roles"></select>
+    </div>
+    <input type="submit" value="Add role to user" class="btn btn.primary" asp-route-userid=@ViewBag.UserId />
+</form>

@@ -44,23 +44,78 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    MVC Backend
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="People" asp-action="Index">People</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Ajax" asp-action="Index">Ajax</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="PeopleDB" asp-action="Index">Database</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Identity
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Identity" asp-action="Index">Identity</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="User" asp-action="Index">Users</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Country" asp-action="Index">Country</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Role" asp-action="Index">Role</a>
+                                            </li>
+                                        </ul>
+                                    </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="People" asp-action="Index">People</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Ajax" asp-action="Index">Ajax</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="PeopleDB" asp-action="Index">Database</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Country" asp-action="Index">Country</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Language" asp-action="Index">Language</a>
-                            </li>
+                                }else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Identity" asp-action="Index">Identity</a>
+                                    </li>
+                                }
+                            }
+                            <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Identity
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Identity" asp-action="Index">Identity</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="User" asp-action="Index">Users</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Country" asp-action="Index">Country</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-controller="Role" asp-action="Index">Role</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                             
+                            
+                        </ul>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <partial name="_loginPartial" />
                         </ul>
                     </div>
                 </div>
@@ -77,5 +132,6 @@
             </nav>
         </footer>
     </div>
+    @await RenderSectionAsync("Scripts", required:false);
 </body>
 </html>
